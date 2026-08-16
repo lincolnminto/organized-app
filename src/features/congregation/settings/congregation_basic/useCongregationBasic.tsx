@@ -13,16 +13,33 @@ import { dbAppSettingsUpdate } from '@services/dexie/settings';
 const useCongregationBasic = () => {
   const timer = useRef<NodeJS.Timeout>(undefined);
 
-  const congName = useAtomValue(congNameState);
   const settings = useAtomValue(settingsState);
   const dataView = useAtomValue(userDataViewState);
   const numberInitial = useAtomValue(congNumberState);
   const circuitInitial = useAtomValue(circuitNumberState);
   const addressInitial = useAtomValue(congAddressState);
+  const nameInitial = useAtomValue(congNameState);
 
   const [congNumber, setCongNumber] = useState(numberInitial);
   const [circuitNumber, setCircuitNumber] = useState(circuitInitial);
   const [address, setAddress] = useState(addressInitial);
+  const [congNameLocal, setCongNameLocal] = useState(nameInitial);
+
+  const handleNameChange = (value: string) => setCongNameLocal(value);
+
+  const handleNameSaveDb = async () => {
+    const trimmedName = congNameLocal.trim();
+
+    if (trimmedName.length === 0) return;
+
+    await dbAppSettingsUpdate({ 'cong_settings.cong_name': trimmedName });
+  };
+
+  const handleNameSave = () => {
+    if (timer.current) clearTimeout(timer.current);
+
+    timer.current = setTimeout(handleNameSaveDb, 1000);
+  };
 
   const handleNumberChange = (value: string) => setCongNumber(value);
 
@@ -86,10 +103,13 @@ const useCongregationBasic = () => {
     setCongNumber(numberInitial);
     setCircuitNumber(circuitInitial);
     setAddress(addressInitial);
-  }, [addressInitial, circuitInitial, numberInitial]);
+    setCongNameLocal(nameInitial);
+  }, [addressInitial, circuitInitial, numberInitial, nameInitial]);
 
   return {
-    congName,
+    congNameLocal,
+    handleNameChange,
+    handleNameSave,
     circuitNumber,
     handleCircuitChange,
     handleCircuitSave,

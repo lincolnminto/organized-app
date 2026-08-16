@@ -7,7 +7,8 @@ import {
 import {
   CardSection,
   CardSectionContent,
-  CardSectionHeader,
+  CardSectionDescription,
+  CardSectionTitle,
 } from '../shared_styles';
 import useCongregationBasic from './useCongregationBasic';
 import HourFormat from './hour_format';
@@ -24,7 +25,9 @@ const CongregationBasic = () => {
   const { isAdmin, isGroup } = useCurrentUser();
 
   const {
-    congName,
+    congNameLocal,
+    handleNameChange,
+    handleNameSave,
     circuitNumber,
     handleCircuitChange,
     handleCircuitSave,
@@ -48,11 +51,22 @@ const CongregationBasic = () => {
           flexDirection: tabletUp ? 'row' : 'column',
         }}
       >
-        <CardSectionHeader
-          description={!isGroup && t('tr_congregationSettingsDesc')}
-          title={isGroup ? t('tr_groupSettings') : congName}
-          sx={{ flex: 1 }}
-        />
+        <Stack spacing="8px" sx={{ flex: 1 }}>
+          {isGroup ? (
+            <CardSectionTitle>{t('tr_groupSettings')}</CardSectionTitle>
+          ) : (
+            <TextField
+              label={t('tr_congregationName')}
+              value={congNameLocal}
+              onChange={(e) => handleNameChange(e.target.value)}
+              onKeyUp={handleNameSave}
+              slotProps={{ input: { readOnly: !isAdmin } }}
+            />
+          )}
+          {!isGroup && (
+            <CardSectionDescription content={t('tr_congregationSettingsDesc')} />
+          )}
+        </Stack>
 
         {!isGroup && (
           <Box
