@@ -44,6 +44,26 @@ const useCongregationDetails = () => {
     setIsElderApproved(value);
   };
 
+  const handleCongNameOverride = (name: string) => {
+    const trimmedName = name.trim();
+
+    if (trimmedName.length === 0) {
+      setCongregation(null);
+      return;
+    }
+
+    setCongregation({
+      congName: trimmedName,
+      address: '',
+      circuit: '',
+      congGuid: '',
+      language: '',
+      location: null,
+      midweekMeetingTime: null,
+      weekendMeetingTime: null,
+    });
+  };
+
   const handleCongregationAction = async () => {
     if (isProcessing) return;
 
@@ -192,6 +212,7 @@ const useCongregationDetails = () => {
     handleToggleApproval,
     isElderApproved,
     congregation,
+    handleCongNameOverride,
   };
 };
 

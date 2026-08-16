@@ -31,6 +31,7 @@ const CongregationDetails = () => {
     handleToggleApproval,
     isElderApproved,
     congregation,
+    handleCongNameOverride,
   } = useCongregationDetails();
 
   return (
@@ -97,6 +98,9 @@ const CongregationDetails = () => {
             <CongregationSelector
               country_guid={country.countryGuid}
               setCongregation={setCongregation}
+              freeSolo={true}
+              freeSoloChange={handleCongNameOverride}
+              freeSoloValue={congregation?.congName || ''}
             />
           )}
 
