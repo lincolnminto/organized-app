@@ -206,6 +206,10 @@ export const dbAppSettingsBuildTest = async () => {
       type: 'main',
       _deleted: { value: false, updatedAt: new Date().toISOString() },
       class_count: { updatedAt: new Date().toISOString(), value: 1 },
+      pairing_minimum_age: {
+        value: 18,
+        updatedAt: new Date().toISOString(),
+      },
       opening_prayer_linked_assignment: {
         value: '',
         updatedAt: new Date().toISOString(),

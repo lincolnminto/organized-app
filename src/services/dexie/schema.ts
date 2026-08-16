@@ -302,6 +302,7 @@ export const settingSchema: SettingsType = {
         type: 'main',
         _deleted: { value: false, updatedAt: '' },
         class_count: { value: 1, updatedAt: '' },
+        pairing_minimum_age: { value: 18, updatedAt: '' },
         opening_prayer_linked_assignment: { value: '', updatedAt: '' },
         closing_prayer_linked_assignment: { value: '', updatedAt: '' },
         time: { value: '00:00', updatedAt: '' },

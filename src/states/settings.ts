@@ -346,6 +346,17 @@ export const midweekMeetingTimeState = atom((get) => {
   );
 });
 
+export const midweekMeetingPairingMinAgeState = atom((get) => {
+  const settings = get(settingsState);
+  const dataView = get(userDataViewState);
+
+  return (
+    settings.cong_settings.midweek_meeting.find(
+      (record) => record.type === dataView
+    )?.pairing_minimum_age?.value ?? 18
+  );
+});
+
 export const midweekMeetingOpeningPrayerLinkedState = atom<
   AssignmentFieldType | ''
 >((get) => {

@@ -11,6 +11,7 @@ import {
   midweekMeetingClassCountState,
   midweekMeetingOpeningPrayerLinkedState,
   midweekMeetingClosingPrayerLinkedState,
+  midweekMeetingPairingMinAgeState,
   midweekMeetingTimeState,
   shortDateFormatState,
   userDataViewState,
@@ -87,6 +88,7 @@ import {
   generateDateFromTime,
   timeAddMinutes,
 } from '@utils/date';
+import { getAge } from '@utils/age';
 import { applyAssignmentFilters, personIsAway, personIsElder } from './persons';
 import { personsByViewState } from '@states/persons';
 import { personsStateFind } from '@services/states/persons';
@@ -1701,7 +1703,30 @@ export const schedulesSelectRandomPerson = (data: {
     const isMale = mainPerson.person_data.male.value;
     const isFemale = mainPerson.person_data.female.value;
 
+    const minAge = store.get(midweekMeetingPairingMinAgeState);
+
+    const studentIsMinor = (() => {
+      const age = getAge(
+        mainPerson.person_data.birth_date.value,
+        meetingDate || data.week
+      );
+      return age !== null && age < minAge;
+    })();
+
     personsElligible = personsElligible.filter((record) => {
+      // Both-minors override: when the main student is a minor, exclude
+      // candidate assistants who are also minors (age at the meeting date).
+      // A null/empty birth date counts as an adult, so such candidates pass.
+      if (studentIsMinor) {
+        const candidateAge = getAge(
+          record.person_data.birth_date.value,
+          meetingDate || data.week
+        );
+        if (candidateAge !== null && candidateAge < minAge) {
+          return false;
+        }
+      }
+
       const isFamilyMembers =
         mainPerson.person_data.family_members?.members.includes(
           record.person_uid
