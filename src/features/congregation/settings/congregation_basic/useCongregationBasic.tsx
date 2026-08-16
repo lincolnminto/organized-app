@@ -11,7 +11,10 @@ import {
 import { dbAppSettingsUpdate } from '@services/dexie/settings';
 
 const useCongregationBasic = () => {
-  const timer = useRef<NodeJS.Timeout>(undefined);
+  const nameTimer = useRef<NodeJS.Timeout>(undefined);
+  const numberTimer = useRef<NodeJS.Timeout>(undefined);
+  const circuitTimer = useRef<NodeJS.Timeout>(undefined);
+  const addressTimer = useRef<NodeJS.Timeout>(undefined);
 
   const settings = useAtomValue(settingsState);
   const dataView = useAtomValue(userDataViewState);
@@ -30,15 +33,18 @@ const useCongregationBasic = () => {
   const handleNameSaveDb = async () => {
     const trimmedName = congNameLocal.trim();
 
-    if (trimmedName.length === 0) return;
+    if (trimmedName.length === 0) {
+      setCongNameLocal(nameInitial);
+      return;
+    }
 
     await dbAppSettingsUpdate({ 'cong_settings.cong_name': trimmedName });
   };
 
   const handleNameSave = () => {
-    if (timer.current) clearTimeout(timer.current);
+    if (nameTimer.current) clearTimeout(nameTimer.current);
 
-    timer.current = setTimeout(handleNameSaveDb, 1000);
+    nameTimer.current = setTimeout(handleNameSaveDb, 1000);
   };
 
   const handleNumberChange = (value: string) => setCongNumber(value);
@@ -53,17 +59,17 @@ const useCongregationBasic = () => {
   };
 
   const handleNumberSave = () => {
-    if (timer.current) clearTimeout(timer.current);
+    if (numberTimer.current) clearTimeout(numberTimer.current);
 
-    timer.current = setTimeout(handleNumberSaveDb, 1000);
+    numberTimer.current = setTimeout(handleNumberSaveDb, 1000);
   };
 
   const handleCircuitChange = (value: string) => setCircuitNumber(value);
 
   const handleCircuitSave = () => {
-    if (timer.current) clearTimeout(timer.current);
+    if (circuitTimer.current) clearTimeout(circuitTimer.current);
 
-    timer.current = setTimeout(handleCircuitSaveDb, 1000);
+    circuitTimer.current = setTimeout(handleCircuitSaveDb, 1000);
   };
 
   const handleCircuitSaveDb = async () => {
@@ -84,9 +90,9 @@ const useCongregationBasic = () => {
   const handleAddressChange = (value: string) => setAddress(value);
 
   const handleAddressSave = () => {
-    if (timer.current) clearTimeout(timer.current);
+    if (addressTimer.current) clearTimeout(addressTimer.current);
 
-    timer.current = setTimeout(handleAddressSaveDb, 1000);
+    addressTimer.current = setTimeout(handleAddressSaveDb, 1000);
   };
 
   const handleAddressSaveDb = async () => {
