@@ -9,4 +9,11 @@ export type CongregationSelectorType = {
   freeSoloChange?: (cong_name: string) => void;
   freeSoloValue?: string;
   readOnly?: boolean;
+  /**
+   * When true (and `freeSolo` is true), commits the current typed input via
+   * `freeSoloChange` on blur if it hasn't already been committed (e.g. via
+   * Enter or selecting an option). Opt-in and scoped per-usage so other
+   * `freeSolo` consumers of this selector keep their existing behavior.
+   */
+  commitOnBlur?: boolean;
 };

@@ -101,6 +101,7 @@ const CongregationDetails = () => {
               freeSolo={true}
               freeSoloChange={handleCongNameOverride}
               freeSoloValue={congregation?.congName || ''}
+              commitOnBlur={true}
             />
           )}
 
@@ -113,7 +114,7 @@ const CongregationDetails = () => {
 
           <Button
             variant="main"
-            disabled={!isElderApproved}
+            disabled={congregation === null || !isElderApproved}
             onClick={handleCongregationAction}
             sx={{ width: '100%' }}
             startIcon={

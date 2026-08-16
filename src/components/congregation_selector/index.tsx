@@ -23,6 +23,7 @@ const CongregationSelector = ({
   readOnly,
   country_guid,
   cong_name,
+  commitOnBlur = false,
 }: CongregationSelectorType) => {
   const { t } = useAppTranslation();
 
@@ -83,6 +84,21 @@ const CongregationSelector = ({
         setCongregation(newValue);
       }}
       onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+      onBlur={() => {
+        if (!commitOnBlur || !freeSolo) return;
+
+        const trimmedInput = inputValue.trim();
+
+        if (trimmedInput === (freeSoloValue || '').trim()) return;
+
+        const isCongExist = options.find(
+          (record) => record.congName === trimmedInput
+        );
+
+        if (!isCongExist) {
+          freeSoloChange?.(trimmedInput);
+        }
+      }}
       loading={isLoading}
       label={selectorLabel}
       startIcon={
