@@ -39,3 +39,6 @@ replit.nix
 .vercel
 
 api/
+
+# Playwright CLI session files
+.playwright-cli/
