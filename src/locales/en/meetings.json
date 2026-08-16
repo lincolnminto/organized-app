@@ -63,6 +63,8 @@
   "tr_skip": "Skip",
   "tr_autofillWM": "Autofill weekend meeting",
   "tr_autofillDesc": "Select which schedules do you want to autofill with qualified participants.",
+  "tr_autofillMinAgeLabel": "Minimum age for participants together",
+  "tr_autofillMinAgeTooltip": "Two students below this age will not be auto-assigned together in the same student assignment (student + assistant). Someone with no birth date counts as an adult.",
   "tr_exportWM": "Export weekend meeting",
   "tr_exportWMDesc": "Select which schedules to export.",
   "tr_autofillCompleted": "Autofill completed",
