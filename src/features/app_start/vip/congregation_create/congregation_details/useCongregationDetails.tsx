@@ -18,6 +18,7 @@ import {
 import { congregationCreateStepState } from '@states/app';
 import { settingSchema } from '@services/dexie/schema';
 import useFeedback from '@features/app_start/shared/hooks/useFeedback';
+import { BRAZIL_COUNTRY } from '@components/country_selector/constants';
 
 const useCongregationDetails = () => {
   const { t } = useAppTranslation();
@@ -29,7 +30,7 @@ const useCongregationDetails = () => {
   const settings = useAtomValue(settingsState);
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const [country, setCountry] = useState<CountryResponseType>(null);
+  const [country, setCountry] = useState<CountryResponseType>(BRAZIL_COUNTRY);
   const [congregation, setCongregation] =
     useState<CongregationResponseType>(null);
   const [userTmpFirstName, setUserTmpFirstName] = useState(
