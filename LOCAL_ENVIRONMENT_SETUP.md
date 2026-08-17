@@ -129,7 +129,6 @@ _That completes the setup of the backend project for the local environment. The 
 _Now, let’s add the required environment variables for the frontend application._
 
 1. Create an `.env` file for this frontend project. You can do it starting from the example file `cp .env.example .env`.
-2. (OPTIONAL) **TEST MODE**: By setting `VITE_APP_MODE="TEST"`, you configure the application to run in a test mode, which includes **pre-populated data** and configurations that facilitate testing and demonstration purposes.
 
 _All the dependencies were installed, and the environment variables are all ready. We can now start the frontend application._
 
