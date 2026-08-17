@@ -2,7 +2,6 @@ import { useLocation } from 'react-router';
 import { useAtomValue } from 'jotai';
 import {
   backupDbOpenState,
-  demoNoticeOpenState,
   isAboutOpenState,
   isAppLoadState,
   isContactOpenState,
@@ -34,7 +33,6 @@ const useRootLayout = () => {
   const isRestoreDb = useAtomValue(restoreDbOpenState);
   const isOpenSupport = useAtomValue(isSupportOpenState);
   const isOnline = useAtomValue(isOnlineState);
-  const isDemoNoticeOpen = useAtomValue(demoNoticeOpenState);
   const settings = useAtomValue(settingsState);
   const isDarkTheme = useAtomValue(isDarkThemeState);
 
@@ -81,7 +79,6 @@ const useRootLayout = () => {
     isRestoreDb,
     isOpenSupport,
     isDashboard,
-    isDemoNoticeOpen,
     initialSetupOpen,
     isDarkTheme,
   };

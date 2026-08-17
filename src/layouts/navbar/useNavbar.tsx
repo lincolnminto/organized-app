@@ -109,11 +109,6 @@ const useNavbar = () => {
     window.open(`https://guide.organized-app.com`, '_blank');
   };
 
-  const handleOpenRealApp = () => {
-    handleCloseMore();
-    window.open(`https://organized-app.com`, '_blank');
-  };
-
   const handleDisonnectAccount = async () => {
     handleCloseMore();
 
@@ -206,7 +201,6 @@ const useNavbar = () => {
     handleGoDashboard,
     isAppLoad,
     handleReconnectAccount,
-    handleOpenRealApp,
     accountType,
     handleDisonnectAccount,
     navBarOptions,

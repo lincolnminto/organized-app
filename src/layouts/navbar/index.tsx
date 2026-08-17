@@ -17,19 +17,15 @@ import {
   IconLogin,
   IconLogo,
   IconMail,
-  IconArrowLink,
   IconLogout,
   IconArrowBack,
   IconSettings,
 } from '@icons/index';
 import { useAppTranslation, useFirebaseAuth } from '@hooks/index';
-import { APP_ENVIRONMENT, isTest } from '@constants/index';
 import { NavBarType } from './index.types';
 import useNavbar from './useNavbar';
 import AccountHeaderIcon from '@components/account_header_icon';
 import AppNotification from '@features/app_notification';
-import Button from '@components/button';
-import DemoBanner from '@features/demo/banner';
 import LanguageSwitcher from '@features/language_switcher';
 import ThemeSwitcher from '@features/theme_switcher';
 import Typography from '@components/typography';
@@ -78,7 +74,6 @@ const NavBar = ({ isSupported }: NavBarType) => {
     handleGoDashboard,
     isAppLoad,
     handleReconnectAccount,
-    handleOpenRealApp,
     handleBack,
     accountType,
     tablet688Up,
@@ -143,9 +138,6 @@ const NavBar = ({ isSupported }: NavBarType) => {
                     <Typography className="h3" color="var(--black)">
                       Organized
                     </Typography>
-                    {APP_ENVIRONMENT && (
-                      <DemoBanner environment={APP_ENVIRONMENT} />
-                    )}
                   </Box>
                 </Box>
                 <Box
@@ -187,7 +179,7 @@ const NavBar = ({ isSupported }: NavBarType) => {
                     }}
                   />
 
-                  {tabletUp && (isAppLoad || isTest) && (
+                  {tabletUp && isAppLoad && (
                     <LanguageSwitcher
                       menuStyle={{
                         ...baseMenuStyle,
@@ -278,7 +270,7 @@ const NavBar = ({ isSupported }: NavBarType) => {
                           )}
                         </MenuItem>
 
-                        {(tabletDown || (!isAppLoad && !isTest)) && (
+                        {(tabletDown || !isAppLoad) && (
                           <LanguageSwitcher menuStyle={menuStyle} />
                         )}
 
@@ -396,28 +388,7 @@ const NavBar = ({ isSupported }: NavBarType) => {
                           </ListItemText>
                         </MenuItem>
 
-                        {isTest && (
-                          <MenuItem
-                            disableRipple
-                            sx={{
-                              ...menuStyle,
-                              height: 'auto',
-                              paddingTop: '5px',
-                            }}
-                            onClick={handleOpenRealApp}
-                          >
-                            <Button
-                              variant="tertiary"
-                              startIcon={<IconArrowLink />}
-                              sx={{ width: '100%', marginTop: '8px' }}
-                            >
-                              {t('tr_openRealApp')}
-                            </Button>
-                          </MenuItem>
-                        )}
-
-                        {!isTest &&
-                          !isAppLoad &&
+                        {!isAppLoad &&
                           !isCongAccountConnected &&
                           accountType === 'vip' && (
                             <MenuItem

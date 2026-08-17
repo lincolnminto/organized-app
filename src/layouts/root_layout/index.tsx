@@ -4,7 +4,6 @@ import { Box, Container, Toolbar } from '@mui/material';
 import { IconClose } from '@components/icons';
 import { AppModalWrapper, WebWorkerWrapper } from '@wrapper/index';
 import { Startup } from '@features/app_start';
-import { isTest } from '@constants/index';
 import useConsoleWarning from '@hooks/useConsoleWarning';
 import useCurrentUser from '@hooks/useCurrentUser';
 import useGlobal from '@hooks/useGlobal';
@@ -15,8 +14,6 @@ import AppReminders from '@features/reminders';
 import AppUpdater from '@features/app_updater';
 import Contact from '@features/contact';
 import DashboardSkeletonLoader from '@features/dashboard/skeleton_loader';
-import DemoNotice from '@features/demo/notice';
-import DemoStartup from '@features/demo/start';
 import EPUBMaterialsImport from '@features/meeting_materials/epub_import';
 import InitialSetup from '@features/dashboard/initial_setup';
 import JWAutoImport from '@features/meeting_materials/jw_auto_import';
@@ -43,7 +40,6 @@ const RootLayout = ({ updatePwa }: { updatePwa: VoidFunction }) => {
     isImportJWOrg,
     isImportEPUB,
     isDashboard,
-    isDemoNoticeOpen,
     initialSetupOpen,
   } = useRootLayout();
 
@@ -83,9 +79,7 @@ const RootLayout = ({ updatePwa }: { updatePwa: VoidFunction }) => {
               {isOpenAbout && <About updatePwa={updatePwa} />}
               {isOpenSupport && <Support />}
 
-              {isAppLoad && !isTest && <Startup />}
-
-              {isAppLoad && isTest && <DemoStartup />}
+              {isAppLoad && <Startup />}
 
               {!isAppLoad && (
                 <Suspense
@@ -97,12 +91,9 @@ const RootLayout = ({ updatePwa }: { updatePwa: VoidFunction }) => {
                     )
                   }
                 >
-                  {isTest && <DemoNotice />}
+                  {!initialSetupOpen && <WhatsNew />}
 
-                  {!initialSetupOpen &&
-                    (!isTest || (isTest && !isDemoNoticeOpen)) && <WhatsNew />}
-
-                  {!isTest && initialSetupOpen && <InitialSetup />}
+                  {initialSetupOpen && <InitialSetup />}
 
                   {isPublisher && <AppReminders />}
 
