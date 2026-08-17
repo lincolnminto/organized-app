@@ -450,10 +450,6 @@ export const POCKET_ROLES: AppRoleType[] = [
   'view_schedules',
 ];
 
-export const APP_ENVIRONMENT = import.meta.env.VITE_APP_MODE;
-
-export const isTest = APP_ENVIRONMENT === 'TEST';
-
 export const ASSIGNMENT_PATH = {
   MM_Chairman_A: 'midweek_meeting.chairman.main_hall',
   MM_Chairman_B: 'midweek_meeting.chairman.aux_class_1',
