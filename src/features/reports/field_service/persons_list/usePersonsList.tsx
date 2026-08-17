@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useBreakpoints } from '@hooks/index';
-import { AssignmentCode } from '@definition/assignment';
 import {
   congFieldServiceReportsState,
   personFilterFieldServiceReportState,
@@ -10,18 +9,12 @@ import {
   selectedPublisherReportState,
 } from '@states/field_service_reports';
 import { PersonType } from '@definition/person';
-import { CongFieldServiceReportType } from '@definition/cong_field_service_reports';
-import { congFieldServiceReportSchema } from '@services/dexie/schema';
-import { dbFieldServiceReportsBulkSave } from '@services/dexie/cong_field_service_reports';
-import { getRandomNumber } from '@utils/common';
-import { branchFieldReportsState } from '@states/branch_field_service_reports';
 import {
   fieldGroupsState,
   languageGroupsState,
 } from '@states/field_service_groups';
 import { fieldGroupsSortMembersByName } from '@services/app/field_service_groups';
 import { userDataViewState } from '@states/settings';
-import usePerson from '@features/persons/hooks/usePerson';
 import usePersons from '@features/persons/hooks/usePersons';
 
 let scrollPosition = 0;
@@ -39,8 +32,6 @@ const usePersonsList = () => {
     getRegularPioneers,
   } = usePersons();
 
-  const { personIsEnrollmentActive, personIsBaptizedPublisher } = usePerson();
-
   const [search, setSearch] = useAtom(personSearchFieldServiceReportState);
 
   const setSelectedPublisher = useSetAtom(selectedPublisherReportState);
@@ -48,7 +39,6 @@ const usePersonsList = () => {
   const currentFilter = useAtomValue(personFilterFieldServiceReportState);
   const currentMonth = useAtomValue(selectedMonthFieldServiceReportState);
   const reports = useAtomValue(congFieldServiceReportsState);
-  const branchReports = useAtomValue(branchFieldReportsState);
   const groups = useAtomValue(fieldGroupsState);
   const dataView = useAtomValue(userDataViewState);
   const languageGroups = useAtomValue(languageGroupsState);
@@ -297,89 +287,6 @@ const usePersonsList = () => {
     language_group_members,
   ]);
 
-  const report_editable = useMemo(() => {
-    if (active_publishers.length === 0) return false;
-
-    const report = branchReports.find(
-      (record) => record.report_date === currentMonth
-    );
-
-    if (!report) return true;
-
-    return !report.report_data.submitted;
-  }, [branchReports, currentMonth, active_publishers]);
-
-  const handleAddRandomData = async () => {
-    const reportsToSave: CongFieldServiceReportType[] = [];
-
-    for (const person of active_publishers) {
-      let report = reports.find(
-        (record) =>
-          record.report_data.person_uid === person.person_uid &&
-          record.report_data.report_date === currentMonth
-      );
-
-      if (!report) {
-        report = structuredClone(congFieldServiceReportSchema);
-        report.report_id = crypto.randomUUID();
-        report.report_data.person_uid = person.person_uid;
-        report.report_data.report_date = currentMonth;
-      }
-
-      if (report) report = structuredClone(report);
-
-      const isAP = personIsEnrollmentActive(person, 'AP', currentMonth);
-      const isFMF = personIsEnrollmentActive(person, 'FMF', currentMonth);
-      const isFR = personIsEnrollmentActive(person, 'FR', currentMonth);
-      const isFS = personIsEnrollmentActive(person, 'FS', currentMonth);
-      const isBaptized = personIsBaptizedPublisher(person, currentMonth);
-
-      if (isFMF || isFS) {
-        report.report_data.hours.field_service = getRandomNumber(100, 115);
-
-        if (isFMF) report.report_data.bible_studies = getRandomNumber(20, 30);
-        if (isFS) report.report_data.bible_studies = getRandomNumber(15, 20);
-      }
-
-      if (isFR) {
-        const reportCredit =
-          person.person_data.assignments
-            .find((a) => a.type === dataView)
-            ?.values.includes(AssignmentCode.MINISTRY_HOURS_CREDIT) ?? false;
-
-        if (reportCredit) {
-          const service = getRandomNumber(20, 40);
-          const credit = 55 - service;
-
-          report.report_data.hours.field_service = service;
-          report.report_data.hours.credit = { approved: credit, value: 0 };
-        }
-
-        if (!reportCredit) {
-          report.report_data.hours.field_service = getRandomNumber(50, 60);
-        }
-
-        report.report_data.bible_studies = getRandomNumber(10, 15);
-      }
-
-      if (isAP) {
-        report.report_data.hours.field_service = getRandomNumber(30, 40);
-        report.report_data.bible_studies = getRandomNumber(5, 10);
-      }
-
-      if (!isFMF && !isFS && !isFR && !isAP && isBaptized) {
-        report.report_data.bible_studies = getRandomNumber(1, 5);
-      }
-
-      report.report_data.shared_ministry = true;
-      report.report_data.status = 'confirmed';
-      report.report_data.updatedAt = new Date().toISOString();
-      reportsToSave.push(report);
-    }
-
-    await dbFieldServiceReportsBulkSave(reportsToSave);
-  };
-
   const handleSearchChange = (value: string) => setSearch(value);
 
   useEffect(() => {
@@ -412,8 +319,6 @@ const usePersonsList = () => {
 
   return {
     persons,
-    handleAddRandomData,
-    report_editable,
     search,
     handleSearchChange,
   };

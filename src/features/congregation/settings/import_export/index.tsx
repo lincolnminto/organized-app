@@ -30,10 +30,7 @@ const ImportExport = (props: ImportExportType) => {
       )}
 
       {state === 'import/confirm' && (
-        <ConfirmImport
-          onBack={handleOpenImportExport}
-          onClose={props.onClose}
-        />
+        <ConfirmImport onBack={handleOpenImportExport} />
       )}
     </Dialog>
   );
