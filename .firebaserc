@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "cong-manager",
+    "production": "cong-manager"
+  },
+  "targets": {}
+}
