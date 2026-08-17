@@ -454,10 +454,6 @@ export const APP_ENVIRONMENT = import.meta.env.VITE_APP_MODE;
 
 export const isTest = APP_ENVIRONMENT === 'TEST';
 
-export const isStaging = APP_ENVIRONMENT === 'STAGING';
-
-export const isDEV = isTest ? false : import.meta.env.DEV;
-
 export const ASSIGNMENT_PATH = {
   MM_Chairman_A: 'midweek_meeting.chairman.main_hall',
   MM_Chairman_B: 'midweek_meeting.chairman.aux_class_1',
