@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useAtomValue } from 'jotai';
-import { isTest, STORAGE_KEY } from '@constants/index';
+import { STORAGE_KEY } from '@constants/index';
 import { isAppLoadState } from '@states/app';
 import { sourcesJWAutoImportState } from '@states/settings';
 import { apiFetchSources } from '@services/api/sources';
@@ -25,8 +25,6 @@ const JWAutoImport = () => {
 
   useEffect(() => {
     if (!isAppLoad && isNavigatorOnline) {
-      if (isTest) return;
-
       if (isMeetingEditor && isAutoImportEnabled) {
         const now = new Date().toISOString();
         const nextSync = localStorage.getItem(STORAGE_KEY.source_import);

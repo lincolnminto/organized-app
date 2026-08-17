@@ -5,7 +5,7 @@ import {
   displaySnackNotification,
   setLastAppDataSync,
 } from '@services/states/app';
-import { isTest, LANGUAGE_LIST } from '@constants/index';
+import { LANGUAGE_LIST } from '@constants/index';
 import {
   congAccountConnectedState,
   isAppDataSyncingState,
@@ -54,7 +54,7 @@ const useWebWorker = () => {
       ?.threeLettersCode || 'eng';
 
   useEffect(() => {
-    if (!isTest && window.Worker) {
+    if (window.Worker) {
       worker.onmessage = async function (event) {
         if (event.data === 'Syncing') {
           setIsAppDataSyncing(true);
