@@ -332,8 +332,6 @@ export const cookiesConsentState = atom(
 
 export const tokenDevState = atom('');
 
-export const demoNoticeOpenState = atom(true);
-
 export const congregationCreateStepState = atom(0);
 
 export const backupFileTypeState = atom<BackupFileType>('');
