@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SwiperRef } from 'swiper/react';
 import { useAppTranslation } from '@hooks/index';
 import { ReleaseNoteType, UpdateStatusType } from '@definition/app';
-import { isTest } from '@constants/index';
 import { ImageSlide } from './index.types';
 import { getAppLang } from '@services/app';
 
@@ -33,14 +32,12 @@ const useWhatsNew = () => {
   const handleClose = () => {
     setOpen(false);
 
-    if (!isTest) {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      const lsVersion = (saved ? JSON.parse(saved) : {}) as UpdateStatusType;
+    const saved = localStorage.getItem(STORAGE_KEY);
+    const lsVersion = (saved ? JSON.parse(saved) : {}) as UpdateStatusType;
 
-      lsVersion[version] = false;
+    lsVersion[version] = false;
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(lsVersion));
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(lsVersion));
   };
 
   const handleNextAction = () => {

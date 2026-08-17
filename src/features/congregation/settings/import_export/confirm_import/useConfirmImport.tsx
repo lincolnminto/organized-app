@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { useAppTranslation } from '@hooks/index';
 import {
-  ConfirmImportProps,
   ImportChoiceType,
   ImportDbType,
   ImportFieldType,
@@ -11,7 +10,6 @@ import {
   backupFileContentsState,
   backupFileNameState,
   backupFileTypeState,
-  featureFlagsState,
 } from '@states/app';
 import { BackupOrganizedType } from '@definition/backup';
 import { PersonType } from '@definition/person';
@@ -42,7 +40,6 @@ import { dbUserFieldServiceReportsClear } from '@services/dexie/user_field_servi
 import { dbVisitingSpeakersClear } from '@services/dexie/visiting_speakers';
 import { UpcomingEventType } from '@definition/upcoming_events';
 import { dbUpcomingEventsClear } from '@services/dexie/upcoming_events';
-import { isTest } from '@constants/index';
 import useCongReportsImport from './useCongReportsImport';
 import useMinistryReportsImport from './useMinistryReportsImport';
 import usePersonsImport from './usePersonsImport';
@@ -55,7 +52,7 @@ import useImportHourglass from './useImportHourglass';
 import useUpcomingEventsImport from './useUpcomingEventsImport';
 import appDb from '@db/appDb';
 
-const useConfirmImport = ({ onClose }: ConfirmImportProps) => {
+const useConfirmImport = () => {
   const { t } = useAppTranslation();
 
   const { getPersons } = usePersonsImport();
@@ -81,7 +78,6 @@ const useConfirmImport = ({ onClose }: ConfirmImportProps) => {
   const filename = useAtomValue(backupFileNameState);
   const backupFileType = useAtomValue(backupFileTypeState);
   const backupFileContents = useAtomValue(backupFileContentsState);
-  const FEATURE_FLAGS = useAtomValue(featureFlagsState);
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [selected, setSelected] = useState<ImportChoiceType>({
@@ -723,16 +719,6 @@ const useConfirmImport = ({ onClose }: ConfirmImportProps) => {
       });
 
       await dbResetExportState();
-
-      if (
-        backupFileType === 'Hourglass' &&
-        isTest &&
-        FEATURE_FLAGS['HOURGLASS_IMPORT']
-      ) {
-        setIsProcessing(false);
-        onClose?.();
-        return;
-      }
 
       setTimeout(() => {
         window.location.href = './';

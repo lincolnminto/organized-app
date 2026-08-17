@@ -33,7 +33,7 @@ const ConfirmImport = (props: ConfirmImportProps) => {
     cong_settings,
     user_settings,
     upcoming_events,
-  } = useConfirmImport(props);
+  } = useConfirmImport();
 
   return (
     <Stack spacing="16px">

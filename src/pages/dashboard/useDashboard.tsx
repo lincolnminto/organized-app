@@ -11,7 +11,6 @@ import {
 import { isMyAssignmentOpenState } from '@states/app';
 import { assignmentsHistoryState } from '@states/schedules';
 import { formatDate } from '@utils/date';
-import { isTest } from '@constants/index';
 import { resolveAssignmentDate } from '@utils/assignments';
 
 const useDashboard = () => {
@@ -31,7 +30,7 @@ const useDashboard = () => {
   }, [settings]);
 
   const initialSnackValue = useMemo(() => {
-    return !isMigrated && isCongNew && !isTest;
+    return !isMigrated && isCongNew;
   }, [isCongNew, isMigrated]);
 
   const [newCongSnack, setNewCongSnack] = useState(initialSnackValue);

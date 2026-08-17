@@ -7,7 +7,6 @@ import {
   IncomingCongregationResponseType,
 } from '@definition/api';
 import { removeSecondsFromTime } from '@utils/date';
-import { isTest } from '@constants/index';
 import { congNameState } from '@states/settings';
 
 const useOffline = (
@@ -22,7 +21,7 @@ const useOffline = (
   const [country, setCountry] = useState<CountryResponseType>(null);
   const [overrideOnline, setOverrideOnline] = useState(false);
 
-  const showOnlineInput = !isTest && isOnline && !overrideOnline;
+  const showOnlineInput = isOnline && !overrideOnline;
 
   const handleWeekday = (value: number) => {
     if (value === 0) return 6;

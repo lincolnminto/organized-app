@@ -1,9 +1,6 @@
 import { Box, Stack } from '@mui/material';
-import { IconGenerate } from '@components/icons';
-import { isTest } from '@constants/index';
-import { useAppTranslation, useCurrentUser } from '@hooks/index';
+import { useAppTranslation } from '@hooks/index';
 import usePersonsList from './usePersonsList';
-import Button from '@components/button';
 import Card from '@components/card';
 import NoSearchResults from '@assets/img/illustration_no_search_results.svg?component';
 import PersonItem from './person_item';
@@ -13,15 +10,7 @@ import Typography from '@components/typography';
 const PersonsList = () => {
   const { t } = useAppTranslation();
 
-  const { isSecretary } = useCurrentUser();
-
-  const {
-    persons,
-    handleAddRandomData,
-    report_editable,
-    search,
-    handleSearchChange,
-  } = usePersonsList();
+  const { persons, search, handleSearchChange } = usePersonsList();
 
   return (
     <Card>
@@ -35,17 +24,6 @@ const PersonsList = () => {
         <Typography className="h3">
           {t('tr_personsAmount', { amount: persons.length })}
         </Typography>
-
-        {isTest && isSecretary && report_editable && (
-          <Button
-            variant="small"
-            startIcon={<IconGenerate />}
-            onClick={handleAddRandomData}
-            sx={{ minHeight: '32px', height: '32px' }}
-          >
-            Random data
-          </Button>
-        )}
       </Box>
 
       <SearchBar
