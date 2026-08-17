@@ -5,6 +5,7 @@ import { getMessageByCode } from '@services/i18n/translation';
 import { ScheduleAutofillType } from './index.types';
 import { schedulesStartAutofill } from '@services/app/autofill';
 import {
+  midweekMeetingPairingEnabledState,
   midweekMeetingPairingMinAgeState,
   settingsState,
   userDataViewState,
@@ -20,17 +21,21 @@ const useScheduleAutofill = (
   const settings = useAtomValue(settingsState);
   const dataView = useAtomValue(userDataViewState);
   const pairingMinAge = useAtomValue(midweekMeetingPairingMinAgeState);
+  const pairingEnabled = useAtomValue(midweekMeetingPairingEnabledState);
 
   const [startWeek, setStartWeek] = useState('');
   const [endWeek, setEndWeek] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [minAge, setMinAge] = useState<number>(pairingMinAge);
+  const [minAgeEnabled, setMinAgeEnabled] = useState<boolean>(pairingEnabled);
 
   const handleSetStartWeek = (value: string) => setStartWeek(value);
 
   const handleSetEndWeek = (value: string) => setEndWeek(value);
 
   const handleSetMinAge = (value: number) => setMinAge(value);
+
+  const handleSetMinAgeEnabled = (value: boolean) => setMinAgeEnabled(value);
 
   const persistMinAge = async () => {
     const safeMinAge =
@@ -46,6 +51,7 @@ const useScheduleAutofill = (
 
     current.pairing_minimum_age = {
       value: safeMinAge,
+      enabled: minAgeEnabled,
       updatedAt: new Date().toISOString(),
     };
 
@@ -88,6 +94,10 @@ const useScheduleAutofill = (
     setMinAge(pairingMinAge);
   }, [pairingMinAge]);
 
+  useEffect(() => {
+    setMinAgeEnabled(pairingEnabled);
+  }, [pairingEnabled]);
+
   return {
     handleSetStartWeek,
     handleSetEndWeek,
@@ -95,6 +105,8 @@ const useScheduleAutofill = (
     handleStartAutoFill,
     minAge,
     handleSetMinAge,
+    minAgeEnabled,
+    handleSetMinAgeEnabled,
   };
 };
 

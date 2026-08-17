@@ -11,6 +11,7 @@ import {
   midweekMeetingClassCountState,
   midweekMeetingOpeningPrayerLinkedState,
   midweekMeetingClosingPrayerLinkedState,
+  midweekMeetingPairingEnabledState,
   midweekMeetingPairingMinAgeState,
   midweekMeetingTimeState,
   shortDateFormatState,
@@ -1703,9 +1704,14 @@ export const schedulesSelectRandomPerson = (data: {
     const isMale = mainPerson.person_data.male.value;
     const isFemale = mainPerson.person_data.female.value;
 
+    const pairingEnabled = store.get(midweekMeetingPairingEnabledState);
     const minAge = store.get(midweekMeetingPairingMinAgeState);
 
     const studentIsMinor = (() => {
+      // When the minimum-age rule is disabled, never treat the student as a
+      // minor for pairing purposes so no candidate assistants get excluded.
+      if (!pairingEnabled) return false;
+
       const age = getAge(
         mainPerson.person_data.birth_date.value,
         meetingDate || data.week

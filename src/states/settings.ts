@@ -357,6 +357,19 @@ export const midweekMeetingPairingMinAgeState = atom((get) => {
   );
 });
 
+export const midweekMeetingPairingEnabledState = atom((get) => {
+  const settings = get(settingsState);
+  const dataView = get(userDataViewState);
+
+  // Records persisted before the toggle existed have no `enabled` flag; treat
+  // them as enabled so the rule keeps its previous behavior after upgrade.
+  return (
+    settings.cong_settings.midweek_meeting.find(
+      (record) => record.type === dataView
+    )?.pairing_minimum_age?.enabled ?? true
+  );
+});
+
 export const midweekMeetingOpeningPrayerLinkedState = atom<
   AssignmentFieldType | ''
 >((get) => {

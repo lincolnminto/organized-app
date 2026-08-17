@@ -108,7 +108,11 @@ export type SettingsType = {
       weekday: { value: number; updatedAt: string };
       time: { value: string; updatedAt: string };
       class_count: { value: number; updatedAt: string };
-      pairing_minimum_age?: { value: number; updatedAt: string };
+      pairing_minimum_age?: {
+        value: number;
+        enabled: boolean;
+        updatedAt: string;
+      };
       opening_prayer_linked_assignment: {
         value: AssignmentFieldType | '';
         updatedAt: string;

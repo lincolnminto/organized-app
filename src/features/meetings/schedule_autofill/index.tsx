@@ -8,6 +8,7 @@ import Dialog from '@components/dialog';
 import Typography from '@components/typography';
 import TextField from '@components/textfield';
 import Tooltip from '@components/tooltip';
+import SwitchWithLabel from '@components/switch_with_label';
 import { IconInfo } from '@components/icons';
 import WeekRangeSelector from '../week_range_selector';
 
@@ -25,6 +26,8 @@ const ScheduleAutofillDialog = ({
     isProcessing,
     minAge,
     handleSetMinAge,
+    minAgeEnabled,
+    handleSetMinAgeEnabled,
   } = useScheduleAutofill(meeting, onClose);
 
   return (
@@ -46,29 +49,47 @@ const ScheduleAutofillDialog = ({
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
             gap: '8px',
             width: '100%',
           }}
         >
-          <TextField
-            type="number"
-            label={t('tr_autofillMinAgeLabel')}
-            value={minAge}
-            onChange={(e) => handleSetMinAge(Number(e.target.value))}
-            sx={{ flex: 1 }}
+          <SwitchWithLabel
+            label={t('tr_autofillMinAgeEnable')}
+            helper={t('tr_autofillMinAgeEnableDesc')}
+            checked={minAgeEnabled}
+            onChange={handleSetMinAgeEnabled}
           />
-          <Tooltip
-            title={t('tr_autofillMinAgeTooltip')}
-            placement="bottom-start"
-            variant="icon"
-            icon={{
-              defaultColor: 'var(--grey-400)',
-              hoverColor: 'var(--accent-main)',
-            }}
-          >
-            <IconInfo width={20} height={20} />
-          </Tooltip>
+
+          {minAgeEnabled && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                width: '100%',
+              }}
+            >
+              <TextField
+                type="number"
+                label={t('tr_autofillMinAgeLabel')}
+                value={minAge}
+                onChange={(e) => handleSetMinAge(Number(e.target.value))}
+                sx={{ flex: 1 }}
+              />
+              <Tooltip
+                title={t('tr_autofillMinAgeTooltip')}
+                placement="bottom-start"
+                variant="icon"
+                icon={{
+                  defaultColor: 'var(--grey-400)',
+                  hoverColor: 'var(--accent-main)',
+                }}
+              >
+                <IconInfo width={20} height={20} />
+              </Tooltip>
+            </Box>
+          )}
         </Box>
       )}
 
