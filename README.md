@@ -103,8 +103,7 @@ We truly appreciate your volunteer spirit! Here are a few ways you can support t
 1. ⭐️ **Star this repository** to help make the app more discoverable for other brothers;
 2. 💬 **Tell others** about the Organized app. Use the [About Organized](https://about.organized-app.com/) website as your go-to resource;
 3. 💰 **Make a voluntary** [**donation**](https://www.buymeacoffee.com/sws2apps) to support ongoing development and maintenance.;
-4. 🌐 **[Translate](https://crowdin.com/project/organized)** the app into your language;
-5. 👨‍💻 **[Collaborate](https://guide.organized-app.com/how-to-support/contribute)** on building the Organized ecosystem: whether it’s **React Development**, **UI/UX design**, **Graphic design**, **Motion design**, or **User guide writing**.
+4. 👨‍💻 **[Collaborate](https://guide.organized-app.com/how-to-support/contribute)** on building the Organized ecosystem: whether it’s **React Development**, **UI/UX design**, **Graphic design**, **Motion design**, or **User guide writing**.
 
 To get started with code contributing, visit our [Contribution guide](https://github.com/sws2apps/organized-app/blob/main/CONTRIBUTING.md) on GitHub, where you'll find everything you need to know about submitting pull requests and coding standards. That guide also points you to our step-by-step [Local environment setup step-by-step instructions](https://github.com/sws2apps/organized-app/blob/main/LOCAL_ENVIRONMENT_SETUP.md) to simplify setting up your local environment.
 
@@ -124,7 +123,7 @@ We are a global community of enthusiastic volunteers. See where our contributors
 
 ## Available in many languages
 
-[![Languages](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi-v3.organized-app.com%2Fapi%2Fv3%2Fpublic%2Fstats&query=%24.languages&label=languages&color=%2328b463&cacheSeconds=60)](https://crowdin.com/project/organized) [![Crowdin](https://badges.crowdin.net/organized/localized.svg)](https://crowdin.com/project/organized)
+[![Supported languages](https://img.shields.io/badge/locales-54-28b463)](#)
 
 Organized is already fully or partially localized in many languages, including `English`, `Spanish`, `Portuguese`, `French`, `German`, `Italian`, `Polish`, `Japanese`, `Korean`, `Russian`, `Swedish`, `Chinese`, `Ukrainian`, `Malagasy`, `Turkish`, `Tagalog` and more are on the way. If you would like to help translate Organized into your language of choice, contributions are welcome and the entire app can typically be translated in just a few days.
 
