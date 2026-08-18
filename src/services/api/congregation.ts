@@ -7,63 +7,6 @@ import { apiDefault } from './common';
 import { AppRoleType } from '@definition/app';
 import { APRecordType } from '@definition/ministry';
 
-export const apiFetchCountries = async () => {
-  const {
-    apiHost,
-    appVersion: appversion,
-    JWLang,
-    idToken,
-  } = await apiDefault();
-
-  const res = await fetch(
-    `${apiHost}api/v3/congregations/countries?language=${JWLang.toUpperCase()}`,
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-        appclient: 'organized',
-        appversion,
-      },
-    }
-  );
-  const data = await res.json();
-
-  return { status: res.status, data };
-};
-
-export const apiFetchCongregations = async (country: string, name: string) => {
-  const {
-    apiHost,
-    appVersion: appversion,
-    JWLang,
-    idToken,
-  } = await apiDefault();
-
-  if (apiHost === '') {
-    return { data: [] };
-  }
-
-  const res = await fetch(
-    `${apiHost}api/v3/congregations/search?language=${JWLang.toUpperCase()}&country=${country}&name=${name}`,
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-        appclient: 'organized',
-        appversion,
-      },
-    }
-  );
-
-  const data = await res.json();
-
-  return { status: res.status, data };
-};
-
 export const apiCreateCongregation = async (
   country_code: string,
   country_guid: string,
