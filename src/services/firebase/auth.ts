@@ -1,5 +1,6 @@
 import {
   AuthProvider,
+  createUserWithEmailAndPassword,
   GithubAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
@@ -7,6 +8,7 @@ import {
   indexedDBLocalPersistence,
   setPersistence,
   signInWithCustomToken,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
@@ -35,6 +37,18 @@ export const userSignInCustomToken = async (code: string) => {
   const userCredential = await signInWithCustomToken(auth, code);
 
   return userCredential?.user;
+};
+
+export const userCreateEmailPassword = async (email: string, password: string) => {
+  const auth = getAuth();
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  return userCredential.user;
+};
+
+export const userSignInEmailPassword = async (email: string, password: string) => {
+  const auth = getAuth();
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  return userCredential.user;
 };
 
 export const userSignInPopup = async (provider: AuthProvider) => {

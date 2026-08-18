@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import Button from '@components/button';
+import TextField from '@components/textfield';
 import InfoMessage from '@components/info-message';
 import { IconError } from '@icons/index';
 import IconLoading from '@components/icon_loading';
@@ -12,6 +13,14 @@ const EmailLinkAuthentication = () => {
 
   const {
     completeEmailAuth,
+    completeInviteAcceptance,
+    invite,
+    firstname,
+    setFirstname,
+    lastname,
+    setLastname,
+    password,
+    setPassword,
     isProcessing,
     handleReturn,
     hideMessage,
@@ -23,8 +32,8 @@ const EmailLinkAuthentication = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <PageHeader
-        title={t('tr_emailAuth')}
-        description={t('tr_emailAuthDescComplete')}
+        title={invite ? t('tr_inviteAcceptTitle') : t('tr_emailAuth')}
+        description={invite ? t('tr_inviteAcceptDesc', { email: invite.email }) : t('tr_emailAuthDescComplete')}
         onClick={handleReturn}
       />
 
@@ -38,22 +47,34 @@ const EmailLinkAuthentication = () => {
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <Button
-            variant="main"
-            onClick={completeEmailAuth}
-            sx={{ padding: '8px 32px', minHeight: '44px' }}
-            startIcon={
-              isProcessing ? (
-                <IconLoading
-                  width={22}
-                  height={22}
-                  color="var(--always-white)"
-                />
-              ) : null
-            }
-          >
-            {t('tr_login')}
-          </Button>
+          {invite ? (
+            <>
+              <TextField label={t('tr_email')} value={invite.email} disabled />
+              <TextField label={t('tr_firstname')} value={firstname} onChange={(event) => setFirstname(event.target.value)} required />
+              <TextField label={t('tr_lastname')} value={lastname} onChange={(event) => setLastname(event.target.value)} required />
+              <TextField label={t('tr_password')} type="password" value={password} onChange={(event) => setPassword(event.target.value)} required helperText={t('tr_invitePasswordHint')} />
+              <Button variant="main" onClick={completeInviteAcceptance} disabled={isProcessing || password.length < 8} sx={{ padding: '8px 32px', minHeight: '44px' }} startIcon={isProcessing ? <IconLoading width={22} height={22} color="var(--always-white)" /> : null}>
+                {t('tr_inviteCreateAccount')}
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="main"
+              onClick={completeEmailAuth}
+              sx={{ padding: '8px 32px', minHeight: '44px' }}
+              startIcon={
+                isProcessing ? (
+                  <IconLoading
+                    width={22}
+                    height={22}
+                    color="var(--always-white)"
+                  />
+                ) : null
+              }
+            >
+              {t('tr_login')}
+            </Button>
+          )}
         </Box>
 
         <Box id="onboarding-error" sx={{ display: 'none' }}>

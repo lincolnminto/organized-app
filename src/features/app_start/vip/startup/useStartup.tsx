@@ -61,7 +61,8 @@ const useStartup = () => {
   const [isStart, setIsStart] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isEmailLink = searchParams.get('code') !== null;
+  const isEmailLink =
+    searchParams.get('code') !== null || searchParams.get('invite') !== null;
 
   const showSignin = useCallback(() => {
     setIsUserSignIn(!isEmailLink);

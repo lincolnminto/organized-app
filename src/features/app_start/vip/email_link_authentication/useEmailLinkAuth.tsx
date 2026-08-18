@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { useSetAtom } from 'jotai';
 import {
   setAuthPersistence,
+  userCreateEmailPassword,
   userSignInCustomToken,
 } from '@services/firebase/auth';
 import { apiUpdatePasswordlessInfo } from '@services/api/user';
+import { apiAcceptInvite, apiGetInviteInfo, InviteInfo } from '@services/api/invite';
 import {
   displayOnboardingFeedback,
   setIsCongAccountCreate,
@@ -39,8 +41,13 @@ const useEmailLinkAuth = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const code = searchParams.get('code');
+  const inviteToken = searchParams.get('invite');
+  const [invite, setInvite] = useState<InviteInfo>();
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleAuthorizationError = async (message: string) => {
+  const handleAuthorizationError = useCallback(async (message: string) => {
     displayOnboardingFeedback({
       title: getMessageByCode('error_app_generic-title'),
       message: getMessageByCode(message),
@@ -48,7 +55,7 @@ const useEmailLinkAuth = () => {
 
     showMessage();
     setIsProcessing(false);
-  };
+  }, [showMessage]);
 
   const handleReturn = () => {
     setIsEmailLinkAuthenticate(false);
@@ -109,13 +116,51 @@ const useEmailLinkAuth = () => {
     }
   };
 
+  const completeInviteAcceptance = async () => {
+    if (!inviteToken || !invite || password.length < 8 || !firstname || !lastname) return;
+
+    try {
+      if (isProcessing) return;
+
+      hideMessage();
+      setIsProcessing(true);
+      await setAuthPersistence();
+      await userCreateEmailPassword(invite.email, password);
+      await apiAcceptInvite({ token: inviteToken, firstname, lastname });
+      setSearchParams('');
+      setIsEmailAuth(false);
+      setIsUserSignIn(false);
+      setIsUserAccountCreated(true);
+      setIsProcessing(false);
+    } catch (err) {
+      console.error(err);
+      await handleAuthorizationError(err.code || err.message || t('error_app_generic-desc'));
+    }
+  };
+
   useEffect(() => {
     setIsUserSignIn(false);
     setIsCongAccountCreate(false);
   }, []);
 
+  useEffect(() => {
+    if (!inviteToken) return;
+
+    void apiGetInviteInfo(inviteToken)
+      .then(setInvite)
+      .catch((error) => handleAuthorizationError(error.message));
+  }, [inviteToken, handleAuthorizationError]);
+
   return {
     completeEmailAuth,
+    completeInviteAcceptance,
+    invite,
+    firstname,
+    setFirstname,
+    lastname,
+    setLastname,
+    password,
+    setPassword,
     isProcessing,
     handleReturn,
     title,
