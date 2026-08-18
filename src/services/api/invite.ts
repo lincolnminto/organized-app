@@ -1,4 +1,5 @@
 import { apiDefault } from './common';
+import { currentAuthUserWhenReady } from '@services/firebase/auth';
 
 export type InviteInfo = {
   email: string;
@@ -8,10 +9,13 @@ export type InviteInfo = {
 };
 
 export const apiGetInviteInfo = async (token: string): Promise<InviteInfo> => {
+  const authUser = await currentAuthUserWhenReady();
   const { apiHost, appVersion: appversion } = await apiDefault();
+  const idToken = await authUser?.getIdToken();
   const res = await fetch(`${apiHost}api/v3/invites/info?token=${encodeURIComponent(token)}`, {
     headers: {
       'Content-Type': 'application/json',
+      ...(idToken ? { Authorization: `Bearer ${idToken}` } : {}),
       appclient: 'organized',
       appversion,
     },

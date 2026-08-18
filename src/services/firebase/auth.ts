@@ -20,6 +20,12 @@ export const currentAuthUser = () => {
   return user;
 };
 
+export const currentAuthUserWhenReady = async () => {
+  const auth = getAuth();
+  await auth.authStateReady();
+  return auth.currentUser;
+};
+
 export const setAuthPersistence = async () => {
   const auth = getAuth();
 
