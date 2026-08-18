@@ -4,12 +4,11 @@ import useOAuthEmail from './useEmail';
 import Button from '@components/button';
 import IconLoading from '@components/icon_loading';
 import TextField from '@components/textfield';
-import Typography from '@components/typography';
 
 const OAuthEmail = () => {
   const { t } = useAppTranslation();
 
-  const { userTmpEmail, setUserTmpEmail, handleSendLink, isProcessing, oauth } =
+  const { userTmpEmail, setUserTmpEmail, password, setPassword, handleSignin, isProcessing } =
     useOAuthEmail();
 
   return (
@@ -17,27 +16,30 @@ const OAuthEmail = () => {
       <TextField
         label={t('tr_email')}
         value={userTmpEmail}
-        onKeyDown={(e) => (e.key == 'Enter' ? handleSendLink() : null)}
+        onKeyDown={(e) => (e.key === 'Enter' ? handleSignin() : null)}
         onChange={(e) => setUserTmpEmail(e.target.value)}
         sx={{ width: '100%', color: 'var(--black)' }}
         className="h4"
-        helperText={
-          oauth && (
-            <Typography className="label-small-regular" color="var(--grey-350)">
-              {t('tr_loginOAuthHint', { oauth })}
-            </Typography>
-          )
-        }
+      />
+
+      <TextField
+        label={t('tr_password')}
+        type="password"
+        value={password}
+        onKeyDown={(e) => (e.key === 'Enter' ? handleSignin() : null)}
+        onChange={(e) => setPassword(e.target.value)}
+        sx={{ width: '100%', color: 'var(--black)' }}
+        className="h4"
       />
 
       <Button
         variant="main"
-        disabled={userTmpEmail.length === 0}
-        onClick={handleSendLink}
+        disabled={userTmpEmail.length === 0 || password.length === 0 || isProcessing}
+        onClick={handleSignin}
         sx={{ padding: '8px 32px', minHeight: '44px' }}
         startIcon={isProcessing ? <IconLoading width={22} height={22} /> : null}
       >
-        {t('tr_sendLink')}
+        {t('tr_login')}
       </Button>
     </Stack>
   );

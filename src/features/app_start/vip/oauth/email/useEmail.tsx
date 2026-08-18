@@ -1,49 +1,56 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { displayOnboardingFeedback } from '@services/states/app';
 import { useAppTranslation } from '@hooks/index';
 import { isEmailValid } from '@services/validator/index';
-import { apiRequestPasswordlesssLink } from '@services/api/user';
+import { apiSendAuthorization } from '@services/api/user';
 import {
-  devAuthLinkState,
-  devAuthOTPState,
-  isEmailSentState,
+  isUnauthorizedRoleState,
   isUserSignInState,
+  isUserAccountCreatedState,
+  isUserMfaVerifyState,
 } from '@states/app';
 import { getMessageByCode } from '@services/i18n/translation';
 import useFeedback from '@features/app_start/shared/hooks/useFeedback';
+import { setAuthPersistence, userSignInEmailPassword } from '@services/firebase/auth';
+import { UserLoginResponseType } from '@definition/api';
+import useAuth from '../../hooks/useAuth';
 
 const useOAuthEmail = () => {
   const { t } = useAppTranslation();
 
   const { hideMessage, showMessage } = useFeedback();
 
-  const setDevLink = useSetAtom(devAuthLinkState);
-  const setDevOTP = useSetAtom(devAuthOTPState);
   const setIsUserSignIn = useSetAtom(isUserSignInState);
-  const setIsEmailSent = useSetAtom(isEmailSentState);
+  const setUserMfaVerify = useSetAtom(isUserMfaVerifyState);
+  const setIsUserAccountCreated = useSetAtom(isUserAccountCreatedState);
+  const setIsUnauthorizedRole = useSetAtom(isUnauthorizedRoleState);
+
+  const { determineNextStep, updateUserSettings } = useAuth();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [userTmpEmail, setUserTmpEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const oauth = useMemo(() => {
-    if (userTmpEmail.includes('@gmail')) {
-      return 'Google';
-    }
+  const handleAuthorizationError = (message: string) => {
+    displayOnboardingFeedback({
+      title: t('error_app_generic-title'),
+      message: getMessageByCode(message),
+    });
+    showMessage();
+    setIsProcessing(false);
+  };
 
-    if (userTmpEmail.includes('@yahoo')) {
-      return 'Yahoo';
-    }
-  }, [userTmpEmail]);
+  const handleUnauthorizedUser = () => {
+    setUserMfaVerify(true);
+    setIsUserAccountCreated(false);
+    setIsUnauthorizedRole(true);
+  };
 
-  const handleSendLink = async () => {
+  const handleSignin = async () => {
     if (isProcessing) return;
 
-    setDevLink('');
-    setDevOTP('');
     hideMessage();
-
-    setIsProcessing(true);
 
     if (!isEmailValid(userTmpEmail)) {
       displayOnboardingFeedback({
@@ -52,45 +59,50 @@ const useOAuthEmail = () => {
       });
       showMessage();
 
-      setIsProcessing(false);
       return;
     }
 
-    const { status, data } = await apiRequestPasswordlesssLink(userTmpEmail);
+    try {
+      setIsProcessing(true);
+      await setAuthPersistence();
+      await userSignInEmailPassword(userTmpEmail, password);
 
-    if (status !== 200) {
-      displayOnboardingFeedback({
-        title: t('error_app_generic-title'),
-        message: getMessageByCode(data.message),
-      });
-      showMessage();
+      const { status, data } = await apiSendAuthorization();
+
+      if (status !== 200) {
+        handleAuthorizationError(data.message);
+        return;
+      }
+
+      const nextStep = determineNextStep(data as UserLoginResponseType);
+
+      if (nextStep.isVerifyMFA || nextStep.encryption || nextStep.createCongregation) {
+        await updateUserSettings(data as UserLoginResponseType, nextStep);
+      }
+
+      if (nextStep.unauthorized) {
+        handleUnauthorizedUser();
+      }
 
       setIsProcessing(false);
-
-      return;
+      setIsUserSignIn(false);
+    } catch (error) {
+      console.error(error);
+      handleAuthorizationError(
+        (error as { code?: string; message?: string }).code ||
+          (error as Error).message ||
+          t('error_app_generic-desc')
+      );
     }
-
-    localStorage.setItem('emailForSignIn', userTmpEmail);
-
-    if (data.link) {
-      setDevLink(data.link);
-    }
-
-    if (data.otp) {
-      setDevOTP(data.otp);
-    }
-
-    setIsProcessing(false);
-    setIsUserSignIn(false);
-    setIsEmailSent(true);
   };
 
   return {
     isProcessing,
     setUserTmpEmail,
-    handleSendLink,
+    setPassword,
+    handleSignin,
     userTmpEmail,
-    oauth,
+    password,
   };
 };
 

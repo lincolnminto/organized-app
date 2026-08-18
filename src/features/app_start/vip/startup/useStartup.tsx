@@ -62,16 +62,14 @@ const useStartup = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const hashSearchParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
-  const isEmailLink =
-    searchParams.get('code') !== null ||
+  const hasInvite =
     searchParams.get('invite') !== null ||
-    hashSearchParams.get('code') !== null ||
     hashSearchParams.get('invite') !== null;
 
   const showSignin = useCallback(() => {
-    setIsUserSignIn(!isEmailLink);
+    setIsUserSignIn(!hasInvite);
     setUserMfaVerify(false);
-  }, [setIsUserSignIn, isEmailLink]);
+  }, [setIsUserSignIn, hasInvite]);
 
   const runStartupCheck = useCallback(async () => {
     try {
@@ -204,8 +202,8 @@ const useStartup = () => {
   ]);
 
   useEffect(() => {
-    setIsEmailLinkAuthenticate(isEmailLink);
-  }, [isEmailLink]);
+    setIsEmailLinkAuthenticate(hasInvite);
+  }, [hasInvite]);
 
   useEffect(() => {
     const checkCookiesConsent = async () => {
@@ -218,12 +216,12 @@ const useStartup = () => {
 
   useEffect(() => {
     if (!cookiesConsent) {
-      setIsUserSignIn(!isEmailLink);
+      setIsUserSignIn(!hasInvite);
       return;
     }
 
     if (cookiesConsent && isStart) runStartupCheck();
-  }, [setIsUserSignIn, cookiesConsent, isEmailLink, isStart, runStartupCheck]);
+  }, [setIsUserSignIn, cookiesConsent, hasInvite, isStart, runStartupCheck]);
 
   return {
     isUserSignIn,

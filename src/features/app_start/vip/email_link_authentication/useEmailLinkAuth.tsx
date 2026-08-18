@@ -4,9 +4,8 @@ import { useSetAtom } from 'jotai';
 import {
   setAuthPersistence,
   userCreateEmailPassword,
-  userSignInCustomToken,
 } from '@services/firebase/auth';
-import { apiSendAuthorization, apiUpdatePasswordlessInfo } from '@services/api/user';
+import { apiSendAuthorization } from '@services/api/user';
 import { apiAcceptInvite, apiGetInviteInfo, InviteInfo } from '@services/api/invite';
 import {
   displayOnboardingFeedback,
@@ -41,7 +40,6 @@ const useEmailLinkAuth = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const hashSearchParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
-  const code = searchParams.get('code') || hashSearchParams.get('code');
   const inviteToken = searchParams.get('invite') || hashSearchParams.get('invite');
   const [invite, setInvite] = useState<InviteInfo>();
   const loadedInviteToken = useRef<string>();
@@ -69,53 +67,6 @@ const useEmailLinkAuth = () => {
     setIsEmailAuth(true);
     setIsUserAccountCreated(false);
     setIsUnauthorizedRole(true);
-  };
-
-  const completeEmailAuth = async () => {
-    try {
-      if (isProcessing) return;
-
-      hideMessage();
-      setIsProcessing(true);
-
-      await setAuthPersistence();
-      const result = await userSignInCustomToken(code);
-
-      if (!result) return;
-
-      const { status, data } = await apiUpdatePasswordlessInfo();
-
-      setSearchParams('');
-
-      if (status !== 200) {
-        handleAuthorizationError(data.message);
-        return;
-      }
-
-      const nextStep: NextStepType = determineNextStep(
-        data as UserLoginResponseType
-      );
-
-      if (
-        nextStep.isVerifyMFA ||
-        nextStep.encryption ||
-        nextStep.createCongregation
-      ) {
-        await updateUserSettings(data as UserLoginResponseType, nextStep);
-      }
-
-      if (nextStep.unauthorized) {
-        handleUnauthorizedUser();
-      }
-
-      setIsProcessing(false);
-    } catch (err) {
-      console.error(err);
-
-      await handleAuthorizationError(
-        err.code || err.message || t('error_app_generic-desc')
-      );
-    }
   };
 
   const completeInviteAcceptance = async () => {
@@ -170,7 +121,7 @@ const useEmailLinkAuth = () => {
   }, [inviteToken, handleAuthorizationError]);
 
   return {
-    completeEmailAuth,
+    completeEmailAuth: completeInviteAcceptance,
     completeInviteAcceptance,
     invite,
     firstname,
