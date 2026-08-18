@@ -66,8 +66,8 @@ Tena mankasitraka ny fahasahiananao manofo ianay! Ireto ny fomba vitsivitsy hano
 1. ⭐️ **Omeo kintana ity tahiry ity** mba hanamora ny fiahana ny rindranasa ho an'ny rahalahi hafa;
 2. 💬 **Lazao amin'ny hafa** ny rindranasa Organized;
 3. 💰 **Manao fanomezam-bola** [**amin'ny sitrapo**](https://www.buymeacoffee.com/sws2apps) hanohanana ny fampandrosoana sy ny fitazomana;
-4. 🌐 **[Adika](https://crowdin.com/project/organized)** ny rindranasa amin'ny fiteninao;
-5. 👨‍💻 **[Miara-asa](https://guide.organized-app.com/how-to-support/contribute)** amin'ny fananganana ny toekantsakafo Organized.
+
+4. 👨‍💻 **[Miara-asa](https://guide.organized-app.com/how-to-support/contribute)** amin'ny fananganana ny toekantsakafo Organized.
 
 ## Misy amin'ny fiteny maro
 

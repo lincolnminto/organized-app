@@ -66,8 +66,8 @@ Organized — це безпечне рішення з відкритим код�
 1. ⭐️ **Постав зірку цьому репозиторію**, щоб зробити застосунок більш помітним для інших братів;
 2. 💬 **Розкажи іншим** про застосунок Organized;
 3. 💰 **Зроби добровільне** [**пожертвування**](https://www.buymeacoffee.com/sws2apps) на підтримку розробки та обслуговування;
-4. 🌐 **[Переклади](https://crowdin.com/project/organized)** застосунок своєю мовою;
-5. 👨‍💻 **[Співпрацюй](https://guide.organized-app.com/how-to-support/contribute)** у побудові екосистеми Organized.
+
+4. 👨‍💻 **[Співпрацюй](https://guide.organized-app.com/how-to-support/contribute)** у побудові екосистеми Organized.
 
 ## Доступний у багатьох мовах
 

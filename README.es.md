@@ -66,8 +66,8 @@ Organized es una solución segura y de código abierto construida en un modelo l
 1. ⭐️ **Dale una estrella a este repositorio** para ayudar a que la app sea más visible para otros hermanos;
 2. 💬 **Cuéntales a otros** sobre la app Organized;
 3. 💰 **Haz una** [**donación voluntaria**](https://www.buymeacoffee.com/sws2apps) para apoyar el desarrollo y mantenimiento;
-4. 🌐 **[Traduce](https://crowdin.com/project/organized)** la app a tu idioma;
-5. 👨‍💻 **[Colabora](https://guide.organized-app.com/how-to-support/contribute)** en la construcción del ecosistema Organized.
+
+4. 👨‍💻 **[Colabora](https://guide.organized-app.com/how-to-support/contribute)** en la construcción del ecosistema Organized.
 
 ## Disponible en muchos idiomas
 

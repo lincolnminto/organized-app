@@ -42,7 +42,7 @@ Create the following to-do list immediately:
 
 - **Never** use raw MUI or HTML elements when a custom wrapper exists.
 - **Never** hardcode values or strings — check `src/constants/index.ts` for values; always translate strings.
-- **Never** edit translation files other than English (`src/locales/en/`) and Brazilian Portuguese (`src/locales/pt-POR/`, locale `por`) — always add/update both when introducing or changing UI strings. Every other language is handled by Crowdin; never edit them manually.
+- **Always** update translations when introducing or changing UI strings — English source (`src/locales/en/`) and Brazilian Portuguese (`src/locales/pt-POR/`, locale `por`) are required; every other locale may be updated directly in repo by anyone opening a PR (no external translation platform).
 - **Never** use raw CSS values (use variables from `global.css`).
 - **Never** mix unrelated changes into one branch/PR (one feature per branch).
 - **Never** use `localStorage` or write directly to Dexie — always use `@services/dexie/` to preserve field-level encryption.

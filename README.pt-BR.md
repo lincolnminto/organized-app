@@ -66,8 +66,8 @@ Agradecemos muito seu espírito voluntário! Veja algumas formas de apoiar o apl
 1. ⭐️ **Dê uma estrela a este repositório** para ajudar a tornar o aplicativo mais descoberto por outros irmãos;
 2. 💬 **Conte a outros** sobre o aplicativo Organized;
 3. 💰 **Faça uma** [**doação voluntária**](https://www.buymeacoffee.com/sws2apps) para apoiar o desenvolvimento e a manutenção;
-4. 🌐 **[Traduza](https://crowdin.com/project/organized)** o aplicativo para seu idioma;
-5. 👨‍💻 **[Colabore](https://guide.organized-app.com/how-to-support/contribute)** na construção do ecossistema Organized.
+
+4. 👨‍💻 **[Colabore](https://guide.organized-app.com/how-to-support/contribute)** na construção do ecossistema Organized.
 
 ## Disponível em vários idiomas
 

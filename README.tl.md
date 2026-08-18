@@ -66,8 +66,8 @@ Lubos naming pinahahalagahan ang iyong boluntaryong espiritu! Narito ang ilang p
 1. ⭐️ **I-star ang repository na ito** upang matulungan itong mas madiskubrihan ng ibang mga kapatid;
 2. 💬 **Sabihin sa iba** ang tungkol sa Organized app;
 3. 💰 **Gumawa ng boluntaryong** [**donasyon**](https://www.buymeacoffee.com/sws2apps) upang suportahan ang patuloy na pag-unlad at pagpapanatili;
-4. 🌐 **[I-translate](https://crowdin.com/project/organized)** ang app sa iyong wika;
-5. 👨‍💻 **[Makipagtulungan](https://guide.organized-app.com/how-to-support/contribute)** sa pagbuo ng Organized ecosystem.
+
+4. 👨‍💻 **[Makipagtulungan](https://guide.organized-app.com/how-to-support/contribute)** sa pagbuo ng Organized ecosystem.
 
 ## Available sa maraming wika
 

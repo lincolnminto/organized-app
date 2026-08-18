@@ -66,8 +66,8 @@ Wir schätzen deinen ehrenamtlichen Geist sehr! Hier sind einige Möglichkeiten,
 1. ⭐️ **Markiere dieses Repository mit einem Stern**, damit die App für andere Brüder leichter auffindbar ist;
 2. 💬 **Erzähle anderen** von der Organized-App;
 3. 💰 **Mache eine freiwillige** [**Spende**](https://www.buymeacoffee.com/sws2apps) zur Unterstützung der laufenden Entwicklung und Wartung;
-4. 🌐 **[Übersetze](https://crowdin.com/project/organized)** die App in deine Sprache;
-5. 👨‍💻 **[Arbeite mit](https://guide.organized-app.com/how-to-support/contribute)** am Aufbau des Organized-Ökosystems.
+
+4. 👨‍💻 **[Arbeite mit](https://guide.organized-app.com/how-to-support/contribute)** am Aufbau des Organized-Ökosystems.
 
 ## In vielen Sprachen verfügbar
 

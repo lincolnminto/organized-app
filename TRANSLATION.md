@@ -1,40 +1,46 @@
 # Organized App translation guide
 
-We use the collaborative localization platform Crowdin.com to work on different translations for the Organized app. All translated and approved content will be pushed to this repository automatically. So, you don't need to create any PRs with translation; it's handled automatically.
+All translations for Organized live in this repository under `src/locales/<locale>/`. English (`src/locales/en/`) is the source of truth. To add or update a translation, edit the JSON file directly and open a pull request.
 
-## How to start translating
-
-1. View our [short video tutorial](https://www.youtube.com/watch?v=GG5q_NkfD6s) to learn how to localize Organized using Crowdin.
-2. Open the [Organized](https://crowdin.com/project/organized) project in Crowdin. If you don't have an account, sign up.
-3. Find your language and start translation.
-
-Additionally, you can find more details and nuances in [Crowdin's guide for volunteer translators](https://support.crowdin.com/for-volunteer-translators/).
-
-### Where are the English source strings?
-
-If you've found a mistake or have a better suggestion for the English language: English sources can be found in [/locales/en](https://github.com/sws2apps/organized-app/tree/main/src/shared/locales/en). Please ensure that you are viewing the **correct desired branch**. If you find any problem with the source, please create a pull request with changes directly to `/locales/en`.
-Crowdin automatically pulls all updates within 3 hours.
-
-### My language is not yet available on Crowdin
-
-Please create a [new issue](https://github.com/sws2apps/organized-app/issues/new?template=new_language_request.yml) in the Organized repository. We would be happy to add the new language so that you can start the translation work on Crowdin.
-
-### What roles are available on Crowdin
-
-For our translation project, we use two following roles: <br>
-• _Translator_ – can suggest translations. Their suggestions require proofreading and approval. <br>
-• _Proofreader_ – can suggest, approve, and proofread translations. They can correct and/or approve translations made by other translators.
-
-If you are fluent in your language and would like to become a proofreader, please contact [sws2apps-admin manager on Crowdin](https://crowdin.com/messages/create/15663523/570305) (you can also find the contact button on the Crowding dashboard page).
-
-### Translation files organization
+## File layout
 
 The localization of this application is divided into different logical parts (files), depending on their use cases:
 
-<img width="630" alt="Screenshot 2024-02-17 at 21 48 57" src="https://github.com/sws2apps/organized-app/assets/80993061/46a36a56-8af8-485e-9347-6f6a8ce9b07a">
+```
+src/locales/<locale>/
+  ├── activities.json
+  ├── congregation.json
+  ├── dashboard.json
+  ├── errors.json
+  ├── forms-templates.json
+  ├── general.json
+  ├── meetings.json
+  ├── ministry.json
+  ├── onboarding.json
+  ├── profile.json
+  ├── public_talks.json
+  ├── release_notes.json
+  ├── source.json
+  └── ui.json
+```
 
-These files vary in size (number of text strings), so choose the one that feels more comfortable for you to start and work on.
+One locale directory per supported language, JSON file per feature.
 
-### Translating "What’s New" contents
+## How to contribute translations
 
-"What’s New in this release" content displayed inside this application can also be localized. To learn more on how to do so, please read [this guide](https://github.com/sws2apps/.github/blob/main/docs/WHATSNEW.md).
+1. **Edit directly in the repo** — Navigate to `src/locales/<your-locale>/` and edit the relevant `*.json` file(s).
+2. **Run locally** — Run `npm run lint` and `npm run build` to verify JSON syntax and that the app builds.
+3. **Open a PR** — Open a pull request against `main`. The PR will be reviewed for JSON syntax and i18next key coverage by a maintainer.
+
+## Adding a new language
+
+To add a new language:
+
+1. Create a new directory under `src/locales/<locale>/` (use the ISO language code, e.g., `de`, `es`, `pt-POR`).
+2. Copy `src/locales/en/source.json` to `src/locales/<locale>/source.json` and translate all values.
+3. Add the corresponding JSON files for each feature (you can start with just `source.json` and `ui.json` for a minimal translation).
+4. Open a pull request with the new locale directory.
+
+## Translating "What's New" contents
+
+"What's New in this release" content displayed inside the application can also be localized. The source file is `src/locales/en/release_notes.json`. Edit the corresponding file in your locale directory (`src/locales/<locale>/release_notes.json`) to translate release notes.

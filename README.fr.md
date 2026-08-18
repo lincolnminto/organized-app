@@ -66,8 +66,8 @@ Nous apprécions grandement ton esprit volontaire ! Voici quelques façons de so
 1. ⭐️ **Mets une étoile sur ce dépôt** pour aider l'application à être plus facilement découverte par d'autres frères ;
 2. 💬 **Parle** de l'application Organized autour de toi ;
 3. 💰 **Fais un** [**don**](https://www.buymeacoffee.com/sws2apps) volontaire pour soutenir le développement continu et la maintenance ;
-4. 🌐 **[Traduis](https://crowdin.com/project/organized)** l'application dans ta langue ;
-5. 👨‍💻 **[Collabore](https://guide.organized-app.com/how-to-support/contribute)** à la construction de l'écosystème Organized.
+
+4. 👨‍💻 **[Collabore](https://guide.organized-app.com/how-to-support/contribute)** à la construction de l'écosystème Organized.
 
 ## Disponible en plusieurs langues
 

@@ -127,16 +127,14 @@ We are a global community of enthusiastic volunteers. See where our contributors
 
 Organized is already fully or partially localized in many languages, including `English`, `Spanish`, `Portuguese`, `French`, `German`, `Italian`, `Polish`, `Japanese`, `Korean`, `Russian`, `Swedish`, `Chinese`, `Ukrainian`, `Malagasy`, `Turkish`, `Tagalog` and more are on the way. If you would like to help translate Organized into your language of choice, contributions are welcome and the entire app can typically be translated in just a few days.
 
-To get started, visit our [Crowdin project page](https://crowdin.com/project/organized) and take a look at the [Translation guide](./TRANSLATION.md).
+To get started, visit our [Translation guide](./TRANSLATION.md).
 
 > [!TIP]
 > _You might want to contribute to our supplementary Crowdin projects:<br>
 > • [Meeting Schedules Parser](https://crowdin.com/project/cpe-jw-epub-parser) parses meeting materials directly from jw.org in your language;<br>
 > • [Notifications and Release Notes project](https://crowdin.com/project/organized-miscellaneous) lets you translate in-app alerts and release notes._
 
-If your language isn’t yet available on Crowdin, please [create a new issue](https://github.com/sws2apps/organized-app/issues/new?assignees=&labels=i18n&projects=&template=new_language_request.yml) to request its inclusion and begin translation and proofreading.
-
-## New features in development
+If your language isn't yet available, please [create a new issue](https://github.com/sws2apps/organized-app/issues/new?assignees=&labels=i18n&projects=&template=new_language_request.yml) to request its inclusion and begin translation and proofreading.
 
 We're working hard to help you manage your congregation tasks easily ❤️
 
@@ -155,9 +153,9 @@ Discover more about Organized ecosystem and how to make the most of the app with
 | [User guide](https://guide.organized-app.com)                                             | Text documentation + FAQ to learn how to get started with the app and discover its various features.   |
 | [Our blog](https://guide.organized-app.com/blog)                                          | Blog with insightful articles with tips and tricks.                                                    |
 | [Translation](https://translate.organized-app.com)                                        | Translate the Organized app to your language – easy and conveniently.                                  |
-| [Contribution guide](https://github.com/sws2apps/organized-app/blob/main/CONTRIBUTING.md) | How to get started contributing to the Organized project.                                              |
-| [Telegram channel](https://t.me/+OHxW4AxGTyAxN2Zk)                                        | The latest announcements, updates, and other useful info on Telegram messenger.                        |
-| [Uptime monitor](https://status.organized-app.com/)                                       | Track real-time app uptime, stay informed about maintenance events, and review past outages.           |
+|| [Contribution guide](https://github.com/sws2apps/organized-app/blob/main/CONTRIBUTING.md) | How to get started contributing to the Organized project.                                              |
+|| [Telegram channel](https://t.me/+OHxW4AxGTyAxN2Zk)                                        | The latest announcements, updates, and other useful info on Telegram messenger.                        |
+|| [Uptime monitor](https://status.organized-app.com/)                                       | Track real-time app uptime, stay informed about maintenance events, and review past outages.           |
 
 ---
 
