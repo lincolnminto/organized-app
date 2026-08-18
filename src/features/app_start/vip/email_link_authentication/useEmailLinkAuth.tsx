@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai';
 import {
   setAuthPersistence,
   userCreateEmailPassword,
+  userSignInEmailPassword,
 } from '@services/firebase/auth';
 import { apiSendAuthorization } from '@services/api/user';
 import { apiAcceptInvite, apiGetInviteInfo, InviteInfo } from '@services/api/invite';
@@ -78,7 +79,15 @@ const useEmailLinkAuth = () => {
       hideMessage();
       setIsProcessing(true);
       await setAuthPersistence();
-      await userCreateEmailPassword(invite.email, password);
+      try {
+        await userCreateEmailPassword(invite.email, password);
+      } catch (error) {
+        if ((error as { code?: string }).code !== 'auth/email-already-in-use') {
+          throw error;
+        }
+
+        await userSignInEmailPassword(invite.email, password);
+      }
       await apiAcceptInvite({ token: inviteToken, firstname, lastname });
       const { status, data } = await apiSendAuthorization();
 
