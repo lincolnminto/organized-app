@@ -6,7 +6,7 @@ import {
   userCreateEmailPassword,
   userSignInCustomToken,
 } from '@services/firebase/auth';
-import { apiUpdatePasswordlessInfo } from '@services/api/user';
+import { apiSendAuthorization, apiUpdatePasswordlessInfo } from '@services/api/user';
 import { apiAcceptInvite, apiGetInviteInfo, InviteInfo } from '@services/api/invite';
 import {
   displayOnboardingFeedback,
@@ -127,10 +127,24 @@ const useEmailLinkAuth = () => {
       await setAuthPersistence();
       await userCreateEmailPassword(invite.email, password);
       await apiAcceptInvite({ token: inviteToken, firstname, lastname });
+      const { status, data } = await apiSendAuthorization();
+
+      if (status !== 200) {
+        handleAuthorizationError(data.message);
+        return;
+      }
+
+      const nextStep: NextStepType = determineNextStep(data as UserLoginResponseType);
+
+      if (nextStep.isVerifyMFA || nextStep.encryption || nextStep.createCongregation) {
+        await updateUserSettings(data as UserLoginResponseType, nextStep);
+      }
+
+      if (nextStep.unauthorized) {
+        handleUnauthorizedUser();
+      }
+
       setSearchParams('');
-      setIsEmailAuth(false);
-      setIsUserSignIn(false);
-      setIsUserAccountCreated(true);
       setIsProcessing(false);
     } catch (err) {
       console.error(err);
