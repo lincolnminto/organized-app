@@ -13,11 +13,21 @@ const useStartup = () => {
   const isSetup = useAtomValue(isSetupState);
   const accountType = useAtomValue(accountTypeState);
   const isAccountChoose = useAtomValue(isAccountChooseState);
+  const hashSearchParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
+  const isInvite =
+    new URLSearchParams(window.location.search).get('invite') !== null ||
+    hashSearchParams.get('invite') !== null;
 
   const [isAuth, setIsAuth] = useState(true);
 
   useEffect(() => {
     const checkAccount = async () => {
+      if (isInvite) {
+        setIsAccountChoose(false);
+        setIsAuth(false);
+        return;
+      }
+
       if (accountType !== '') {
         setIsAccountChoose(false);
         setIsAuth(false);
@@ -35,9 +45,15 @@ const useStartup = () => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [accountType]);
+  }, [accountType, isInvite]);
 
-  return { isUnauthorizedRole, isSetup, isAuth, isAccountChoose, accountType };
+  return {
+    isUnauthorizedRole,
+    isSetup,
+    isAuth,
+    isAccountChoose,
+    accountType: isInvite ? 'vip' : accountType,
+  };
 };
 
 export default useStartup;

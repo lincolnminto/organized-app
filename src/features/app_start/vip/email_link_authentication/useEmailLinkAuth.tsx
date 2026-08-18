@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { useSetAtom } from 'jotai';
 import {
@@ -40,9 +40,11 @@ const useEmailLinkAuth = () => {
 
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const code = searchParams.get('code');
-  const inviteToken = searchParams.get('invite');
+  const hashSearchParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
+  const code = searchParams.get('code') || hashSearchParams.get('code');
+  const inviteToken = searchParams.get('invite') || hashSearchParams.get('invite');
   const [invite, setInvite] = useState<InviteInfo>();
+  const loadedInviteToken = useRef<string>();
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [password, setPassword] = useState('');
@@ -158,7 +160,9 @@ const useEmailLinkAuth = () => {
   }, []);
 
   useEffect(() => {
-    if (!inviteToken) return;
+    if (!inviteToken || loadedInviteToken.current === inviteToken) return;
+
+    loadedInviteToken.current = inviteToken;
 
     void apiGetInviteInfo(inviteToken)
       .then(setInvite)

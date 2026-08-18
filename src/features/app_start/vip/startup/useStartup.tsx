@@ -61,8 +61,12 @@ const useStartup = () => {
   const [isStart, setIsStart] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
+  const hashSearchParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
   const isEmailLink =
-    searchParams.get('code') !== null || searchParams.get('invite') !== null;
+    searchParams.get('code') !== null ||
+    searchParams.get('invite') !== null ||
+    hashSearchParams.get('code') !== null ||
+    hashSearchParams.get('invite') !== null;
 
   const showSignin = useCallback(() => {
     setIsUserSignIn(!isEmailLink);
@@ -214,11 +218,12 @@ const useStartup = () => {
 
   useEffect(() => {
     if (!cookiesConsent) {
-      setIsUserSignIn(true);
+      setIsUserSignIn(!isEmailLink);
+      return;
     }
 
     if (cookiesConsent && isStart) runStartupCheck();
-  }, [setIsUserSignIn, cookiesConsent, isStart, runStartupCheck]);
+  }, [setIsUserSignIn, cookiesConsent, isEmailLink, isStart, runStartupCheck]);
 
   return {
     isUserSignIn,
