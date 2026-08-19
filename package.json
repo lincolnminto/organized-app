@@ -15,6 +15,7 @@
     "test": "npm run cypress:test",
     "cypress:open": "cypress open",
     "cypress:test": "cypress run --browser chrome",
+    "cypress:congregation-create": "cypress run --browser chrome --spec cypress/e2e/congregation-create.cy.ts",
     "generate:css": "node converter/css/convert.js && prettier  converter/css/tokens.json src/global/global.css src/global/global.ts --write",
     "generate:icons": "node converter/svg/convert.js && prettier src/components/icons --write",
     "locales:unused": "tsx unused-i18n-keys.ts",
