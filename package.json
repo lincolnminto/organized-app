@@ -9,7 +9,7 @@
     "url": "https://github.com/sws2apps/organized-app.git"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "npm i && vite",
     "build": "vite build && tsx workbox.config.ts",
     "preview": "serve -l 4050 -s dist",
     "test": "npm run cypress:test",

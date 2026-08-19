@@ -3,7 +3,7 @@ import { useSetAtom } from 'jotai';
 import { displayOnboardingFeedback } from '@services/states/app';
 import { useAppTranslation } from '@hooks/index';
 import { isEmailValid } from '@services/validator/index';
-import { apiSendAuthorization } from '@services/api/user';
+import { apiAdminEmailPasswordSignin } from '@services/api/user';
 import {
   isUnauthorizedRoleState,
   isUserSignInState,
@@ -67,7 +67,7 @@ const useOAuthEmail = () => {
       await setAuthPersistence();
       await userSignInEmailPassword(userTmpEmail, password);
 
-      const { status, data } = await apiSendAuthorization();
+      const { status, data } = await apiAdminEmailPasswordSignin();
 
       if (status !== 200) {
         handleAuthorizationError(data.message);

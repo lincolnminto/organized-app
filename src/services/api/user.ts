@@ -42,6 +42,25 @@ export const apiSendAuthorization = async () => {
   return { status: res.status, data };
 };
 
+export const apiAdminEmailPasswordSignin = async () => {
+  const { apiHost, appVersion: appversion, idToken } = await apiDefault();
+
+  const res = await fetch(`${apiHost}api/v3/admin-email-password-signin`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${idToken}`,
+      appclient: 'organized',
+      appversion,
+    },
+  });
+
+  const data = await res.json();
+
+  return { status: res.status, data };
+};
+
 export const apiHandleVerifyOTP = async (userOTP: string) => {
   const { apiHost, appVersion: appversion, idToken } = await apiDefault();
 

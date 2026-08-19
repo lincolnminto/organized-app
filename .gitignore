@@ -42,3 +42,6 @@ api/
 
 # Playwright CLI session files
 .playwright-cli/
+
+# Cypress runtime evidence
+cypress/screenshots/

@@ -52,11 +52,8 @@ const useFeatureFlags = () => {
       if (import.meta.env.VITE_BACKEND_API) {
         tmpHost = import.meta.env.VITE_BACKEND_API;
       } else {
-        if (
-          import.meta.env.DEV ||
-          window.location.host.indexOf('localhost') !== -1
-        ) {
-          tmpHost = 'http://localhost:8000/';
+        if (import.meta.env.DEV || window.location.host.indexOf('localhost') !== -1) {
+          tmpHost = `${window.location.protocol}//${window.location.hostname}:8000/`;
         } else {
           tmpHost = 'https://api.organized-app.com/';
         }
