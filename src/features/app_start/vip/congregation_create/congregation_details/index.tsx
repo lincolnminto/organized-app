@@ -1,12 +1,10 @@
 import { Box } from '@mui/material';
-import { IconAccount, IconError } from '@icons/index';
+import { IconAccount, IconCongregation, IconError, IconFindCountry } from '@icons/index';
 import IconLoading from '@components/icon_loading';
 import { useAppTranslation } from '@hooks/index';
 import useCongregationDetails from './useCongregationDetails';
 import Button from '@components/button';
 import Checkbox from '@components/checkbox';
-import CongregationSelector from '@components/congregation_selector';
-import CountrySelector from '@components/country_selector';
 import InfoMessage from '@components/info-message';
 import TextField from '@components/textfield';
 import VipInfoTip from '@features/app_start/vip/vip_info_tip';
@@ -15,10 +13,7 @@ const CongregationDetails = () => {
   const { t } = useAppTranslation();
 
   const {
-    country,
     handleCongregationAction,
-    setCongregation,
-    setCountry,
     isProcessing,
     title,
     message,
@@ -92,18 +87,25 @@ const CongregationDetails = () => {
             />
           </Box>
 
-          <CountrySelector value={country} handleCountryChange={setCountry} />
+          <TextField
+            label={t('tr_country')}
+            value={new Intl.DisplayNames([navigator.language], {
+              type: 'region',
+            }).of('BR')}
+            variant="outlined"
+            inputProps={{ readOnly: true }}
+            startIcon={<IconFindCountry />}
+          />
 
-          {country !== null && (
-            <CongregationSelector
-              country_guid={country.countryGuid}
-              setCongregation={setCongregation}
-              freeSolo={true}
-              freeSoloChange={handleCongNameOverride}
-              freeSoloValue={congregation?.congName || ''}
-              commitOnBlur={true}
-            />
-          )}
+          <TextField
+            label={t('tr_congregationName')}
+            value={congregation?.congName || ''}
+            variant="outlined"
+            autoComplete="off"
+            onChange={(event) => handleCongNameOverride(event.target.value)}
+            onBlur={(event) => handleCongNameOverride(event.target.value)}
+            startIcon={<IconCongregation />}
+          />
 
           <Checkbox
             label={t('tr_registeringApproved')}
