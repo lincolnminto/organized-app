@@ -26,7 +26,8 @@ const CongregationDetails = () => {
     handleToggleApproval,
     isElderApproved,
     congregation,
-    handleCongNameOverride,
+    handleCongNameChange,
+    handleCongNameBlur,
   } = useCongregationDetails();
 
   return (
@@ -102,8 +103,8 @@ const CongregationDetails = () => {
             value={congregation?.congName || ''}
             variant="outlined"
             autoComplete="off"
-            onChange={(event) => handleCongNameOverride(event.target.value)}
-            onBlur={(event) => handleCongNameOverride(event.target.value)}
+            onChange={(event) => handleCongNameChange(event.target.value)}
+            onBlur={(event) => handleCongNameBlur(event.target.value)}
             startIcon={<IconCongregation />}
           />
 
@@ -116,7 +117,12 @@ const CongregationDetails = () => {
 
           <Button
             variant="main"
-            disabled={congregation === null || !isElderApproved}
+            disabled={
+              isProcessing ||
+              userTmpFirstName.trim().length === 0 ||
+              congregation === null ||
+              !isElderApproved
+            }
             onClick={handleCongregationAction}
             sx={{ width: '100%' }}
             startIcon={

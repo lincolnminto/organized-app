@@ -45,16 +45,14 @@ const useCongregationDetails = () => {
     setIsElderApproved(value);
   };
 
-  const handleCongNameOverride = (name: string) => {
-    const trimmedName = name.trim();
-
-    if (trimmedName.length === 0) {
+  const setCongregationName = (name: string) => {
+    if (name.trim().length === 0) {
       setCongregation(null);
       return;
     }
 
     setCongregation({
-      congName: trimmedName,
+      congName: name,
       address: '',
       circuit: '',
       congGuid: '',
@@ -63,6 +61,14 @@ const useCongregationDetails = () => {
       midweekMeetingTime: null,
       weekendMeetingTime: null,
     });
+  };
+
+  const handleCongNameChange = (name: string) => {
+    setCongregationName(name);
+  };
+
+  const handleCongNameBlur = (name: string) => {
+    setCongregationName(name.trim());
   };
 
   const handleCongregationAction = async () => {
@@ -212,7 +218,8 @@ const useCongregationDetails = () => {
     handleToggleApproval,
     isElderApproved,
     congregation,
-    handleCongNameOverride,
+    handleCongNameChange,
+    handleCongNameBlur,
   };
 };
 
